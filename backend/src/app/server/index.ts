@@ -33,10 +33,8 @@ export default abstract class Server<T,F> {
     }
 
     private log_register() {
-
         this.app.use( morgan('personalizado',this.morganConfig.accesLog()))
         this.app.use( morgan('personalizado',this.morganConfig.errorLog()))
-
     }
 
     get App(){

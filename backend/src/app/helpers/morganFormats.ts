@@ -28,9 +28,8 @@ export default class morganConfig {
         token('date', () => dateNow.format('dddd, DD/MM/YYYY, HH:mm:ss '))
 
         log.info('ajustando formato para logs')
-
-        return format('personalizado', ':remote-addr - :remote-user [:date] ":method \
-        :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"');
+        const formato = ':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent';
+        return format('personalizado', formato);
     }
 
     private stream(typeLog:string) {
@@ -41,7 +40,7 @@ export default class morganConfig {
     }
 
     public accesLog():Options<Request,Response>{
-        log.info('generando archivo access.log...');
+        log.info('generando archivo access.log')
         return {
             skip: ( req:Request, { statusCode }:Response ) => !(statusCode >= 200 && statusCode < 300),
             stream: this.stream('access.log')
@@ -51,7 +50,7 @@ export default class morganConfig {
     public errorLog():Options<Request,Response>{
         log.info('generando archivo error.log')
         return {
-            skip: ( req:Request, { statusCode }:Response ) => !(statusCode >= 200 && statusCode < 300),
+            skip: ( req:Request, { statusCode }:Response ) => (statusCode >= 200 && statusCode < 300),
             stream: this.stream('error.log')
         }
     } 
