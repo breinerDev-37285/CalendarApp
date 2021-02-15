@@ -1,0 +1,23 @@
+.calendar-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    margin: 2em 0;
+}
+
+.rbc-calendar {
+    padding: 1em;
+    width: 90%;
+    height: 100%;
+}
+
+.react-datetime-picker {
+    input:focus {
+        outline: none;
+    }
+
+    &__wrapper {
+        border: 0px solid grey !important;
+    }
+}

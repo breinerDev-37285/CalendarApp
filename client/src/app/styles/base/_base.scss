@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.html, body {
+    height: 100vh;
+    width: 100vw;
+}
+
+.linking,.linking-dark {
+    text-decoration: none;
+    color: $primary;
+    &:hover {
+        color: inherit; 
+    }
+}
+
+.linking-dark {
+    color: #fff;
+}
+
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-5{
+    margin-bottom: 5px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
