@@ -1,6 +1,10 @@
-import express, { Application,json,urlencoded } from 'express';
-import morgan from 'morgan';
+import express, { Application,json,NextFunction,Request,Response,urlencoded } from 'express';
+import morgan,{ StreamOptions } from 'morgan';
 import path from 'path';
+import fs from 'fs';
+import { dateNow } from '@config/logger';
+import { nextTick } from 'process';
+import { Stream } from 'stream';
 
 
 export default abstract class Server<T,F> {
@@ -17,8 +21,9 @@ export default abstract class Server<T,F> {
     }
 
     private onInit() {
-        this.log_debug();
         this.Parser();
+        this.log_debug();
+        this.log_register();
     }
 
     private log_debug() {
@@ -30,6 +35,31 @@ export default abstract class Server<T,F> {
         this.app.use( urlencoded({
             extended:true
         }))
+    }
+
+    private log_register() {
+    
+        let ruta = path.resolve(__dirname, '../logs')
+
+        if (!fs.existsSync(ruta)) {
+            fs.mkdirSync(ruta)
+        }
+        
+        morgan.token('date', () => dateNow.format('dddd, DD/MM/YYYY, HH:mm:ss '))
+        const format = ':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+        morgan.format('personalizado', format);
+
+
+        this.app.use(morgan('personalizado', { 
+            skip: ( req:Request, { statusCode }:Response ) => !(statusCode >= 200 && statusCode < 300),
+            stream: fs.createWriteStream(path.join(ruta,'access.log'), { flags: 'a' })
+        }));
+
+        this.app.use(morgan('personalizado', { 
+            skip: ( req:Request, { statusCode }:Response ) => (statusCode >= 200 && statusCode < 300),
+            stream: fs.createWriteStream(path.join(ruta,'error.log'), { flags: 'a' })
+        }));
+        
     }
 
     get App(){

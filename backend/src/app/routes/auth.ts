@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { createUser,getLogin, renewToken  } from '@services/auth';
 
 const router:Router = Router();
-const path = 'auth';
+const path = '/auth';
 
 router.route(`${path}/user`)
     .post( createUser );
