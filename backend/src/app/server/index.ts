@@ -1,10 +1,7 @@
 import express, { Application,json,NextFunction,Request,Response,urlencoded } from 'express';
-import morgan,{ StreamOptions } from 'morgan';
-import path from 'path';
-import fs from 'fs';
-import { dateNow } from '@config/logger';
-import { nextTick } from 'process';
-import { Stream } from 'stream';
+import morgan, { Morgan } from 'morgan';
+import { log } from '@config/logger';
+import MorganConfig from '@helpers/morganFormats';
 
 
 export default abstract class Server<T,F> {
@@ -12,22 +9,19 @@ export default abstract class Server<T,F> {
     protected app:Application;
     protected port:number;
     protected appName:string;
+    private morganConfig:MorganConfig;
 
     constructor( port:number,name:string ) {
         this.app = express();
         this.port = port;
         this.appName = name;
+        this.morganConfig = MorganConfig.init();
         this.onInit();
     }
 
     private onInit() {
         this.Parser();
-        this.log_debug();
         this.log_register();
-    }
-
-    private log_debug() {
-        this.app.use(morgan('dev'))
     }
 
     private Parser(){
@@ -35,31 +29,14 @@ export default abstract class Server<T,F> {
         this.app.use( urlencoded({
             extended:true
         }))
+        log.warn('agregando modulos de parseo de informacion...')
     }
 
     private log_register() {
-    
-        let ruta = path.resolve(__dirname, '../logs')
 
-        if (!fs.existsSync(ruta)) {
-            fs.mkdirSync(ruta)
-        }
-        
-        morgan.token('date', () => dateNow.format('dddd, DD/MM/YYYY, HH:mm:ss '))
-        const format = ':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-        morgan.format('personalizado', format);
+        this.app.use( morgan('personalizado',this.morganConfig.accesLog()))
+        this.app.use( morgan('personalizado',this.morganConfig.errorLog()))
 
-
-        this.app.use(morgan('personalizado', { 
-            skip: ( req:Request, { statusCode }:Response ) => !(statusCode >= 200 && statusCode < 300),
-            stream: fs.createWriteStream(path.join(ruta,'access.log'), { flags: 'a' })
-        }));
-
-        this.app.use(morgan('personalizado', { 
-            skip: ( req:Request, { statusCode }:Response ) => (statusCode >= 200 && statusCode < 300),
-            stream: fs.createWriteStream(path.join(ruta,'error.log'), { flags: 'a' })
-        }));
-        
     }
 
     get App(){

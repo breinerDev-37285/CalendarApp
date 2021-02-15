@@ -1,4 +1,6 @@
 import { config } from 'dotenv';
+import { resolve } from 'path';
+import {  existsSync, mkdirSync } from 'fs';
 
 config({
     path: '.env'
@@ -19,3 +21,9 @@ switch( NODE_ENV ){
     default:
         throw new Error('No se encontro un ambiente valido')
 };
+
+const path = resolve(__dirname,'../logs');
+
+if (!existsSync(path)) {
+    mkdirSync(path)
+}

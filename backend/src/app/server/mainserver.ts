@@ -1,5 +1,6 @@
 import Server from '@server/index';
 import endPoint from '@routes/index';
+import { log } from '@config/logger';
 
 export default class ServerMain extends Server<void,Function> {
 
@@ -12,11 +13,15 @@ export default class ServerMain extends Server<void,Function> {
 
     private init(){
         this.app.use('/api/v1/',endPoint);
+        log.warn('cargando rutas de auth...')
     }
 
     public static init( port:number,name:string ){
         if( !ServerMain.instance ){
             this.instance =  new ServerMain( port,name );
+            log.info('inicializando servidor...');
+        }else{
+            log.warn('Servidor ya ha sido inicializado');
         }
         return this.instance;
     }
