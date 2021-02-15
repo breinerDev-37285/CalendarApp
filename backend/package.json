@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "tsc --init",
-    "build": "'rm -rf ./dist' && tsc --build",
+    "build": "tsc --build",
     "postinstall": "link-module-alias",
     "dev": "nodemon --ext ts,js,json --exec 'ts-node -r tsconfig-paths/register src/index.ts'",
     "start": "node ./dist/index.js",
@@ -16,16 +16,7 @@
   "author": "",
   "license": "ISC",
   "_moduleAliases": {
-    "@app": "./src/app/app.js",
-    "@server": "./src/app/server",
-    "@config": "./src/app/config",
-    "@routes": "./src/app/routes",
-    "@services": "./src/app/services",
-    "@middlewares": "./src/app/middlewares",
-    "@typesSrc": "./src/app/types",
-    "@database": "./src/app/database",
-    "@interfaces": "./src/app/interfaces",
-    "@helpers": "./src/app/helpers"
+    "@config": "dist/app/config"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

@@ -87,13 +87,15 @@ El proyecto esta configurado para inluir rutas relativas, sin embargo son opcion
 }, 
 ```
 
+Se debe agregar `./dist` al inicio de la ruta para las rutas configuradas en el archivo package.json
+
 **package.json**
 
 ```
 "_moduleAliases": {
-    "@app": "./src/app/app.js",
-    "@server": "./src/app/server",
-    "@config": "./src/app/config",
+    "@app": "./dist/app/app.js",
+    "@server": "./dist/app/server",
+    "@config": "./dist/app/config",
 }
 ```
 
