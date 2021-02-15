@@ -1,4 +1,7 @@
-import express, { Application } from 'express';
+import express, { Application,json,urlencoded } from 'express';
+import morgan from 'morgan';
+import path from 'path';
+
 
 export default abstract class Server<T,F> {
 
@@ -10,6 +13,23 @@ export default abstract class Server<T,F> {
         this.app = express();
         this.port = port;
         this.appName = name;
+        this.onInit();
+    }
+
+    private onInit() {
+        this.log_debug();
+        this.Parser();
+    }
+
+    private log_debug() {
+        this.app.use(morgan('dev'))
+    }
+
+    private Parser(){
+        this.app.use( json() );
+        this.app.use( urlencoded({
+            extended:true
+        }))
     }
 
     get App(){
