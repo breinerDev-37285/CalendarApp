@@ -1,5 +1,6 @@
 import { Schema,model } from 'mongoose';
 import { i_user_model } from '@interfaces/user.interface';
+import { hashSync,genSaltSync } from 'bcryptjs';
 
 
 const userSchema = new Schema({
@@ -19,6 +20,12 @@ const userSchema = new Schema({
     collection: 'usuarios',
     timestamps: true
 });
+
+userSchema.pre('save', function() {
+    const user:any = this;
+    const salt = genSaltSync();
+    user.password = hashSync(user.password, salt);
+})
 
 
 export default model<i_user_model>('User',userSchema);

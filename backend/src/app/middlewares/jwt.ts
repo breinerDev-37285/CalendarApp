@@ -3,6 +3,7 @@ import { log } from '@config/logger';
 import { Request,Response,NextFunction } from 'express';
 
 
+
 export const validarToken = ( req:Request, res:Response,next:NextFunction ) => {
     try {
         
@@ -19,7 +20,7 @@ export const validarToken = ( req:Request, res:Response,next:NextFunction ) => {
                 log.error(err)
                 return res.status( 400 ).json({
                     ok: false,
-                    msg: 'Por favor contacte a un administrador'
+                    err: err.message
                 })
             }
 

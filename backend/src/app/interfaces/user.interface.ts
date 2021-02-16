@@ -14,3 +14,8 @@ export interface i_user_types<T> {
     password: T,
     username: T 
 }
+
+export interface i_login {
+    email: string;
+    password: string;
+}
