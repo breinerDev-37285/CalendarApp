@@ -14,9 +14,3 @@ export interface i_user_types<T> {
     password: T,
     username: T 
 }
-
-
-export interface i_types {
-    field: string;
-    msg: string;
-}
