@@ -28,16 +28,13 @@ export default class morganConfig {
     private tokens() {
         token('date', () => dateNow.format('dddd, DD/MM/YYYY, HH:mm:ss '))
 
-        token('service-name', (req:Request,res:Response) => {
-            console.log(req)
-            return '';
-        })
+        token('service', (req:Request, res:Response) => res.get('X-Service'))
     }
 
     private formats() {
        
         log.info('ajustando formato para logs')
-        const formato = ':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent';
+        const formato = ':remote-addr - [:date] ":method :url - :service HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent';
         return format('personalizado', formato);
     }
 

@@ -1,5 +1,6 @@
 import express, { Application,json,NextFunction,Request,Response,urlencoded } from 'express';
 import morgan, { Morgan } from 'morgan';
+import helmet from 'helmet';
 import { log } from '@config/logger';
 import MorganConfig from '@helpers/morganFormats';
 
@@ -21,6 +22,7 @@ export default abstract class Server<T,F> {
 
     private onInit() {
         this.Parser();
+        this.Helmet();
         this.log_register();
     }
 
@@ -36,6 +38,11 @@ export default abstract class Server<T,F> {
         this.app.use( morgan('personalizado', this.morganConfig.accesLog()))
         this.app.use( morgan('personalizado',this.morganConfig.errorLog()))
     }
+
+    private Helmet(){
+        this.app.use(helmet())
+    }
+
 
     get App(){
         return this.app;

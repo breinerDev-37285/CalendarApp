@@ -8,6 +8,7 @@ import { compareSync } from 'bcryptjs';
 
 
 export const createUser = async ( req:Request, res:Response ) => {
+    res.header('X-Service','createUser');
 
     try {
         const user = new User( req.body );
@@ -32,6 +33,7 @@ export const createUser = async ( req:Request, res:Response ) => {
 
 
 export const getLogin = async ( req:Request, res:Response ) => {
+    res.header('X-Service','login');
     try {
         const { email,password }:i_login = req.body;
         const user = await User.findOne({email}, 'password');
@@ -64,6 +66,7 @@ export const getLogin = async ( req:Request, res:Response ) => {
 
 
 export const renewToken = ( req:Request, res:Response ) => {
+    res.header('X-Service','renewToken');
     const payload:i_jwt = req.body.tokenPayload;
     const token = generarToken(payload);
 
