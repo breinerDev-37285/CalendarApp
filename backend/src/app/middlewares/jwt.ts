@@ -1,18 +1,6 @@
-import { sign,verify,VerifyErrors } from 'jsonwebtoken';
+import { verify } from 'jsonwebtoken';
 import { log } from '@config/logger';
 import { Request,Response,NextFunction } from 'express';
-import i_jwt from '@interfaces/jwt';
-
-
-export const generarToken = ( {uid,username}:i_jwt ) => {
-    
-    const { SECRET_JWT_SEED } = process.env;
-    const payload = { uid,  username }
-
-    return sign(payload,String(SECRET_JWT_SEED),{
-        expiresIn: '2h'
-    })
-}
 
 
 export const validarToken = ( req:Request, res:Response,next:NextFunction ) => {
