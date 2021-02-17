@@ -1,5 +1,3 @@
-import { check } from 'express-validator';
-import { userTypes } from '@typesSrc/user';
 import { emailVal,passwordVal,usernameVal } from './isValid';
 
 export const loginVal = ():Array<any> => {

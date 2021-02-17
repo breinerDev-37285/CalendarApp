@@ -1,6 +1,9 @@
-import { validationResult,check } from 'express-validator';
+import { validationResult,check, Meta } from 'express-validator';
 import { NextFunction, Request, Response } from 'express';
-import { userTypes } from '@typesSrc/user';
+import { userTypes,eventTypes } from '@typesSrc/index';
+import isDate from '@helpers/isDate';
+import { dateNow } from '@config/logger';
+
 
 export const emailVal = () => {
     const { field,msg } = userTypes.email;
@@ -28,6 +31,31 @@ export const usernameVal = () => {
         .escape()
 }
 
+export const titleVal = () => {
+    const { field,msg } = eventTypes.title;
+    return check( field,msg )
+        .not().isEmpty()
+        .isString()
+        .trim()
+}
+
+export const start = () => {
+    const { field,msg } = eventTypes.start;
+    return date(field,msg)
+}
+
+
+export const end = () => {
+    const { field,msg } = eventTypes.end;
+    return date( field,msg );
+}
+
+
+const date = ( field:string, msg: string ) =>  check( field,msg )
+    .not().isEmpty()
+    .custom( isDate )
+
+    
 export default ( req:Request, res:Response,next:NextFunction ) => {
     const val = validationResult(req);
 
@@ -39,4 +67,4 @@ export default ( req:Request, res:Response,next:NextFunction ) => {
     }else{
         return next();
     }
-}
+};

@@ -1,7 +1,7 @@
-import { Schema,model } from 'mongoose';
-import { i_events_model } from '@interfaces/events.interface';
-
-const eventsSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
+const eventsSchema = new mongoose_1.Schema({
     title: {
         type: String,
         required: true
@@ -15,16 +15,12 @@ const eventsSchema = new Schema({
         required: true
     },
     user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose_1.Schema.Types.ObjectId,
         refer: 'User',
         required: true
     }
-},{
+}, {
     collection: 'eventos',
     timestamps: true
 });
-
-
-
-export default model<i_events_model>('Event',eventsSchema);
-
+exports.default = mongoose_1.model('Event', eventsSchema);

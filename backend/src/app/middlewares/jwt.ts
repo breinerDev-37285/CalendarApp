@@ -15,7 +15,7 @@ export const validarToken = ( req:Request, res:Response,next:NextFunction ) => {
             msg: 'No existe el token'
         })
 
-        verify( token,String(SECRET_JWT_SEED),(err,payload) => {
+        verify( token,String(SECRET_JWT_SEED),(err,payload:any) => {
             if( err ) {
                 log.error(err)
                 return res.status( 400 ).json({
@@ -25,6 +25,7 @@ export const validarToken = ( req:Request, res:Response,next:NextFunction ) => {
             }
 
             req.body.tokenPayload = payload;
+            req.body.user = payload.uid
             return next();
         })
 

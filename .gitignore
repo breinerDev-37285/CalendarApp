@@ -10,6 +10,7 @@
 
 # production
 ./build
+./backend/dist*
 
 # misc
 .DS_Store
@@ -20,4 +21,4 @@
 ./client/yarn-error.log*
 
 
-log*
+./backend/src/app/logs

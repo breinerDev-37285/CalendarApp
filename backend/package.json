@@ -16,7 +16,16 @@
   "author": "",
   "license": "ISC",
   "_moduleAliases": {
-    "@config": "dist/app/config"
+    "@config": "dist/app/config",
+    "@app": "dist/app/app.js",
+    "@server": "dist/app/server",
+    "@routes": "dist/app/routes",
+    "@services": "dist/app/services",
+    "@middlewares": "dist/app/middlewares",
+    "@typesSrc": "dist/app/types",
+    "@database": "dist/app/database",
+    "@interfaces": "dist/app/interfaces",
+    "@helpers": "dist/app/helpers"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
