@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User from '@database/models/user.model';
+import User from '@database/models/user';
 import { log } from '@config/logger';
 import { generarToken } from '@helpers/jwt';
 import { i_login } from '@interfaces/user.interface';
@@ -7,28 +7,24 @@ import i_jwt from '@interfaces/jwt';
 import { compareSync } from 'bcryptjs';
 
 
-export const createUser = async ( req:Request, res:Response ) => {
+export const createUser = ( req:Request, res:Response ) => {
     res.header('X-Service','createUser');
 
-    try {
-        const user = new User( req.body );
+    const user = new User( req.body );
 
-        await user.save();
-
+    return user.save((err:any,data) => {
+        if(err) return res.status(500).json({
+            ok: false,
+            err: err.message
+        })
+        
         const token = generarToken({uid: user.id, username: user.username});
 
-        res.status(201).json({
+        return res.status(201).json({
             ok: true,
             token
         })
-        
-    } catch (error) {
-        log.error(error);
-        return res.status(500).json({
-            ok: false, 
-            msg: 'Por favor contacte a un administrador'
-        })
-    }
+    });
 }
 
 
