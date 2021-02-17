@@ -28,6 +28,7 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^5.10.3",
+    "@types/morgan": "^1.9.2",
     "@types/node-fetch": "^2.5.8",
     "@types/redis": "^2.8.28",
     "dotenv": "^8.2.0",
