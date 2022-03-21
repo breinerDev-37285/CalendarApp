@@ -1,0 +1,58 @@
+.auth_main {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth_box_container,.auth_box_container-dark{
+    border: none;
+    width: 400px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 7px $dark-grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.auth_box_container-dark{
+    background-color: $primary;
+    color: #fff;
+}
+
+.auth_form_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.auth_input{
+    width: 80%;
+    margin: 10px 0;
+    padding: 7px;
+    outline: none;
+    &::placeholder {
+        padding: 0 3px;
+    }
+}
+
+.btn-auth,.btn-auth-dark{
+    width: 80%;
+    margin: 25px 0;
+    border-radius: 7px;
+}
+
+.btn-auth-dark {
+    background-color: #fff;
+    color: $primary;
+    &:hover {
+        background-color: lighten($color: $dark-grey, $amount: 55);
+        color: $primary;
+    }
+}
